@@ -1,0 +1,263 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f4f5fb;
+}
+
+.container{
+display:flex;
+height:100vh;
+}
+
+.sidebar{
+width:250px;
+background:white;
+padding:20px;
+border-right:1px solid #eee;
+}
+
+.logo{
+font-size:22px;
+margin-bottom:25px;
+}
+
+.menu li{
+list-style:none;
+padding:12px;
+margin:5px 0;
+cursor:pointer;
+border-radius:8px;
+}
+
+.menu li:hover{
+background:#e8e7ff;
+color:#5f5eff;
+}
+
+.menu li a {
+text-decoration: none;
+color: inherit;
+}
+
+.profile{
+display:flex;
+gap:10px;
+margin-top:40px;
+}
+
+.profile img{
+border-radius:50%;
+width:40px;
+height:40px;
+object-fit:cover;
+}
+
+
+.feed{
+flex:1;
+padding:20px;
+overflow-y:auto;
+}
+
+.tabs{
+display:flex;
+gap:30px;
+margin-bottom:20px;
+font-weight:bold;
+}
+
+.tabs span{
+cursor:pointer;
+color:gray;
+}
+
+.tabs span.active{
+color:#5f5eff;
+}
+
+.stories{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+}
+
+.story{
+text-align:center;
+font-size:12px;
+}
+
+.story img{
+width:60px;
+height:60px;
+border-radius:50%;
+border:3px solid #6c6cff;
+}
+
+.postbox{
+background:white;
+padding:15px;
+border-radius:10px;
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.postbox img{
+border-radius:50%;
+width:40px;
+height:40px;
+}
+
+.postbox input{
+flex:1;
+border:none;
+outline:none;
+font-size:14px;
+}
+
+.postbox button{
+background:#6c6cff;
+color:white;
+border:none;
+padding:8px 18px;
+border-radius:20px;
+cursor:pointer;
+}
+
+.post{
+background:white;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.post-header{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+}
+
+.post-header img{
+border-radius:50%;
+width:40px;
+height:40px;
+}
+
+.post-image{
+width:100%;
+border-radius:10px;
+margin-top:10px;
+}
+
+
+.right{
+width:280px;
+background:white;
+padding:20px;
+border-left:1px solid #eee;
+}
+
+.search{
+width:100%;
+padding:10px;
+border-radius:20px;
+border:1px solid #ddd;
+margin-bottom:20px;
+}
+
+.trend{
+margin-bottom:15px;
+}
+
+.trend p{
+font-size:12px;
+color:gray;
+}
+
+.trend span{
+font-size:12px;
+color:gray;
+}
+
+/* Auth Styling */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-logo {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.auth-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  width: 350px;
+  text-align: left;
+}
+
+.auth-box hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.auth-input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.auth-input:focus {
+  border-color: #6c6cff;
+}
+
+.auth-button {
+  background: #6c6cff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-button:hover {
+  background: #5f5eff;
+}
+
+.auth-button.register {
+  background: #444;
+}
+
+.auth-button.register:hover {
+  background: #333;
+}
