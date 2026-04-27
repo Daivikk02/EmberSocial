@@ -11,12 +11,12 @@ function Stories() {
             </div>
 
             <div className="story">
-                <img src="https://i.pravatar.cc/60?img=2" />
+                <img src="https://i.pravatar.cc/60?img=2" alt="Elena" />
                 <p>Elena</p>
             </div>
 
             <div className="story">
-                <img src="https://i.pravatar.cc/60?img=3" />
+                <img src="https://i.pravatar.cc/60?img=3" alt="Jin" />
                 <p>Jin</p>
             </div>
 

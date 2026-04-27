@@ -10,7 +10,7 @@ function Feed() {
     let userString = localStorage.getItem("emberUser");
     let loggedInUser = userString ? JSON.parse(userString).username : "You";
     let loggedInAvatar = localStorage.getItem("emberAvatar") || "/user.png";
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -22,7 +22,7 @@ function Feed() {
             }
         };
         fetchPosts();
-    }, []);
+    }, [API_URL]);
 
     const handlePost = async () => {
         if (!postText.trim()) return;
@@ -40,6 +40,26 @@ function Feed() {
             setPostText("");
         } catch (err) {
             console.log("Failed to create post:", err);
+        }
+    };
+
+    const handleLike = async (postId) => {
+        try {
+            const res = await axios.put(`${API_URL}/api/posts/${postId}/like`, { username: loggedInUser });
+            setPosts(posts.map(post => (post._id === postId ? res.data : post)));
+        } catch (err) {
+            console.log("Failed to like post:", err);
+        }
+    };
+
+    const handleDelete = async (postId) => {
+        if (!window.confirm("Are you sure you want to delete this post?")) return;
+        try {
+            await axios.delete(`${API_URL}/api/posts/${postId}`, { data: { username: loggedInUser } });
+            setPosts(posts.filter(post => post._id !== postId));
+        } catch (err) {
+            console.log("Failed to delete post:", err);
+            alert(err.response?.data || "Failed to delete post");
         }
     };
 
@@ -70,11 +90,16 @@ function Feed() {
                 posts.map(post => (
                     <Post 
                         key={post._id || post.id} 
+                        id={post._id}
                         username={post.username} 
                         text={post.text} 
                         time={post.time} 
                         createdAt={post.createdAt}
                         avatar={post.avatar} 
+                        likes={post.likes}
+                        loggedInUser={loggedInUser}
+                        onLike={handleLike}
+                        onDelete={handleDelete}
                     />
                 ))
             )}

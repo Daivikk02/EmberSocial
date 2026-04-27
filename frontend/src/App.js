@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import UserProfile from "./pages/UserProfile";
 import Trending from "./pages/Trending";
 import Login from "./Login";
 import Register from "./Register";
@@ -44,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/user/:username" element={<UserProfile />} />
         <Route path="/trending" element={<Trending />} />
       </Routes>
     </Router>

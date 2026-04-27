@@ -9,7 +9,7 @@ function Profile() {
 
     const [username, setUsername] = useState(currentUser.username || "");
     const [profilePicture, setProfilePicture] = useState(currentUser.profilePicture || "");
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
 
     const handleSave = async () => {
         try {

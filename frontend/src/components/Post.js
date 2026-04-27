@@ -1,4 +1,6 @@
-function Post({ username, text, time, avatar, createdAt }) {
+import { Link } from "react-router-dom";
+
+function Post({ id, username, text, time, avatar, createdAt, likes = [], loggedInUser, onLike, onDelete }) {
     const timeAgo = (date) => {
         if (!date) return time || "now";
         const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -18,14 +20,35 @@ function Post({ username, text, time, avatar, createdAt }) {
     return (
         <div className="post">
             <div className="post-header">
-                <img src={avatar || "/user.png"} alt="user" />
+                <Link to={`/user/${username}`}>
+                    <img src={avatar || "/user.png"} alt="user" />
+                </Link>
                 <div>
-                    <b>{username || "You"}</b>
+                    <b><Link to={`/user/${username}`} style={{ textDecoration: 'none', color: 'inherit' }}>{username || "You"}</Link></b>
                     <p>@{String(username || "you").toLowerCase().replace(/ /g, "")} • {timeAgo(createdAt)}</p>
                 </div>
             </div>
 
             <p>{text}</p>
+
+            <div className="post-actions" style={{ display: 'flex', gap: '15px', marginTop: '15px' }}>
+                <button 
+                    onClick={() => onLike(id)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', color: likes.includes(loggedInUser) ? '#e0245e' : '#555' }}
+                >
+                    {likes.includes(loggedInUser) ? '❤️' : '🤍'} {likes.length}
+                </button>
+
+                {username === loggedInUser && (
+                    <button 
+                        onClick={() => onDelete(id)}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#555' }}
+                        title="Delete Post"
+                    >
+                        🗑️
+                    </button>
+                )}
+            </div>
         </div>
     );
 }
