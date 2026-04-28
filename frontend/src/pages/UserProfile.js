@@ -12,7 +12,7 @@ function UserProfile() {
 
     let userString = localStorage.getItem("emberUser");
     let loggedInUser = userString ? JSON.parse(userString).username : "You";
-    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
+    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
 
     useEffect(() => {
         const fetchUserData = async () => {

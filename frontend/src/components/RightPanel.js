@@ -5,7 +5,7 @@ import axios from "axios";
 function RightPanel() {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
-    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
+    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
 
     useEffect(() => {
         const fetchSearch = async () => {

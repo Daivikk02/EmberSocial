@@ -11,7 +11,7 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState(currentUser.profilePicture || "");
     const [uploading, setUploading] = useState(false);
     const [saving, setSaving] = useState(false);
-    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
+    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
 
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];

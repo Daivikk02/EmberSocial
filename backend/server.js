@@ -91,7 +91,7 @@ app.post("/api/auth/register", async (req, res) => {
       username: username,
       email: email,
       password: hashedPassword,
-      profilePicture: profilePicture || "/user.png"
+      profilePicture: profilePicture || "/user1.png"
     });
 
     const savedUser = await newUser.save();
