@@ -4,7 +4,7 @@ import axios from "axios";
 function Login({ setUser }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
+    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
 
     const handleLogin = async () => {
         try {

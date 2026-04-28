@@ -12,7 +12,7 @@ function UserProfile() {
 
     let userString = localStorage.getItem("emberUser");
     let loggedInUser = userString ? JSON.parse(userString).username : "You";
-    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
+    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -73,9 +73,9 @@ function UserProfile() {
                 ) : (
                     <>
                         <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "30px", background: "white", padding: "20px", borderRadius: "10px" }}>
-                            <img 
-                                src={userProfile.profilePicture || "/user.png"} 
-                                alt={userProfile.username} 
+                            <img
+                                src={userProfile.profilePicture || "/user.png"}
+                                alt={userProfile.username}
                                 style={{ width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover", border: "3px solid #6c6cff" }}
                             />
                             <div>
@@ -87,7 +87,7 @@ function UserProfile() {
                                     <p style={{ color: "#5f5eff", fontWeight: "bold", margin: 0 }}>{userProfile.following?.length || 0} <span style={{ color: "gray", fontWeight: "normal" }}>Following</span></p>
                                 </div>
                                 {loggedInUser !== userProfile.username && (
-                                    <button 
+                                    <button
                                         onClick={handleFollow}
                                         style={{ marginTop: "15px", background: userProfile.followers?.includes(loggedInUser) ? "#eee" : "#6c6cff", color: userProfile.followers?.includes(loggedInUser) ? "black" : "white", border: "none", padding: "8px 20px", borderRadius: "20px", cursor: "pointer", fontWeight: "bold" }}
                                     >
@@ -105,14 +105,14 @@ function UserProfile() {
                             <p style={{ textAlign: "center", color: "gray", marginTop: "20px" }}>No posts from {userProfile.username} yet.</p>
                         ) : (
                             posts.map(post => (
-                                <Post 
-                                    key={post._id || post.id} 
+                                <Post
+                                    key={post._id || post.id}
                                     id={post._id}
-                                    username={post.username} 
-                                    text={post.text} 
-                                    time={post.time} 
+                                    username={post.username}
+                                    text={post.text}
+                                    time={post.time}
                                     createdAt={post.createdAt}
-                                    avatar={post.avatar} 
+                                    avatar={post.avatar}
                                     likes={post.likes}
                                     loggedInUser={loggedInUser}
                                     onLike={handleLike}

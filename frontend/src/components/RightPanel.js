@@ -5,7 +5,7 @@ import axios from "axios";
 function RightPanel() {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
-    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
+    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
 
     useEffect(() => {
         const fetchSearch = async () => {
@@ -31,16 +31,16 @@ function RightPanel() {
     return (
         <div className="right">
             <div style={{ position: "relative" }}>
-                <input 
-                    className="search" 
-                    placeholder="Search Ember" 
+                <input
+                    className="search"
+                    placeholder="Search Ember"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
                 {results.length > 0 && (
                     <div style={{ position: "absolute", top: "45px", left: 0, right: 0, background: "white", borderRadius: "10px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)", zIndex: 10, padding: "10px", maxHeight: "300px", overflowY: "auto" }}>
                         {results.map(user => (
-                            <Link to={`/user/${user.username}`} key={user._id} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px", textDecoration: "none", color: "inherit", borderRadius: "8px" }} onMouseEnter={(e) => e.currentTarget.style.background = "#f4f5fb"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"} onClick={() => {setQuery(''); setResults([]);}}>
+                            <Link to={`/user/${user.username}`} key={user._id} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px", textDecoration: "none", color: "inherit", borderRadius: "8px" }} onMouseEnter={(e) => e.currentTarget.style.background = "#f4f5fb"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"} onClick={() => { setQuery(''); setResults([]); }}>
                                 <img src={user.profilePicture || "/user.png"} alt="user" style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover" }} />
                                 <b>{user.username}</b>
                             </Link>

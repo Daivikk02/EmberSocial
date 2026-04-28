@@ -135,9 +135,13 @@ app.put("/api/user/profile", async (req, res) => {
     const newUsername = req.body.username;
     const newProfilePicture = req.body.profilePicture;
 
+    if (!email) {
+      return res.status(400).send("Email is required");
+    }
+
     const user = await User.findOne({ email: email });
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send("User not found with email: " + email);
     }
 
     const oldUsername = user.username;
@@ -147,22 +151,27 @@ app.put("/api/user/profile", async (req, res) => {
 
     const updatedUser = await user.save();
 
-    if (newUsername && newUsername !== oldUsername) {
-      await Post.updateMany({ username: oldUsername }, { $set: { username: newUsername } });
-      await Post.updateMany({ likes: oldUsername }, { $set: { "likes.$": newUsername } });
-      await User.updateMany({ followers: oldUsername }, { $set: { "followers.$": newUsername } });
-      await User.updateMany({ following: oldUsername }, { $set: { "following.$": newUsername } });
-    }
+    // Cascade updates (non-blocking — don't let these fail the whole request)
+    try {
+      if (newUsername && newUsername !== oldUsername) {
+        await Post.updateMany({ username: oldUsername }, { $set: { username: newUsername } });
+        await Post.updateMany({ likes: oldUsername }, { $set: { "likes.$": newUsername } });
+        await User.updateMany({ followers: oldUsername }, { $set: { "followers.$": newUsername } });
+        await User.updateMany({ following: oldUsername }, { $set: { "following.$": newUsername } });
+      }
 
-    if (newProfilePicture) {
-      await Post.updateMany({ username: user.username }, { $set: { avatar: newProfilePicture } });
+      if (newProfilePicture) {
+        await Post.updateMany({ username: user.username }, { $set: { avatar: newProfilePicture } });
+      }
+    } catch (cascadeErr) {
+      console.log("Cascade update error (non-fatal):", cascadeErr.message);
     }
 
     res.json(updatedUser);
 
   } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal Server Error when updating profile");
+    console.log("Profile update error:", err);
+    res.status(500).send("Profile update failed: " + (err.message || "Unknown error"));
   }
 });
 

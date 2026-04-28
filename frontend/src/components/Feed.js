@@ -10,7 +10,7 @@ function Feed() {
     let userString = localStorage.getItem("emberUser");
     let loggedInUser = userString ? JSON.parse(userString).username : "You";
     let loggedInAvatar = localStorage.getItem("emberAvatar") || "/user.png";
-    const API_URL = process.env.REACT_APP_API_URL || "https://ember-social-gray.vercel.app";
+    const API_URL = process.env.REACT_APP_API_URL !== undefined ? process.env.REACT_APP_API_URL : "http://localhost:5000";
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -26,14 +26,14 @@ function Feed() {
 
     const handlePost = async () => {
         if (!postText.trim()) return;
-        
+
         const newPost = {
             username: loggedInUser,
             text: postText,
             time: "just now",
             avatar: loggedInAvatar
         };
-        
+
         try {
             const res = await axios.post(`${API_URL}/api/posts`, newPost);
             setPosts([res.data, ...posts]);
@@ -75,8 +75,8 @@ function Feed() {
 
             <div className="postbox">
                 <img src={loggedInAvatar} alt="user" />
-                <input 
-                    placeholder={"What's on your mind, " + loggedInUser + "?"} 
+                <input
+                    placeholder={"What's on your mind, " + loggedInUser + "?"}
                     value={postText}
                     onChange={(e) => setPostText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handlePost()}
@@ -85,17 +85,17 @@ function Feed() {
             </div>
 
             {posts.length === 0 ? (
-                <p style={{textAlign: "center", color: "gray", marginTop: "20px"}}>No posts yet! Be the first to share something.</p>
+                <p style={{ textAlign: "center", color: "gray", marginTop: "20px" }}>No posts yet! Be the first to share something.</p>
             ) : (
                 posts.map(post => (
-                    <Post 
-                        key={post._id || post.id} 
+                    <Post
+                        key={post._id || post.id}
                         id={post._id}
-                        username={post.username} 
-                        text={post.text} 
-                        time={post.time} 
+                        username={post.username}
+                        text={post.text}
+                        time={post.time}
                         createdAt={post.createdAt}
-                        avatar={post.avatar} 
+                        avatar={post.avatar}
                         likes={post.likes}
                         loggedInUser={loggedInUser}
                         onLike={handleLike}
